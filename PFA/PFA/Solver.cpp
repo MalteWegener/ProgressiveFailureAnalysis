@@ -8,7 +8,7 @@ Result Solver(Panel * pnl, double Force)
 	double skcr2 = 4 * pow(PI, 2)*pnl->sk.I2*pnl->sk.mat.E / pow(0.4 / (pnl->stringers.size() - 1), 2)*pnl->sk.A1;
 	std::vector<double> strcr;
 	strcr.resize(pnl->stringers.size());
-	for (int i = 0; i < strcr.size(); i++)
+	for (unsigned int i = 0; i < strcr.size(); i++)
 	{
 		strcr[i] = 4 * pow(PI, 2)*pnl->stringers[i].I*pnl->stringers[i].mat.E / pow(pnl->sk.length, 2)*pnl->stringers[i].A;
 	}
@@ -26,7 +26,7 @@ Result Solver(Panel * pnl, double Force)
 	double del = 0;
 
 	//run a solver 10 times
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		double totstiff = 0;
 		double totarea = 0;
