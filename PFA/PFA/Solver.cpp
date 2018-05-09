@@ -26,7 +26,7 @@ Result Solver(Panel * pnl, double Force)
 	double del = 0;
 
 	//run a solver 10 times
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		double totstiff = 0;
 		double totarea = 0;
@@ -51,8 +51,9 @@ Result Solver(Panel * pnl, double Force)
 		{
 			if (!strbckl[i]) strbckl[i] = (del*pnl->stringers[i].mat.E >= strcr[i]);
 		}
-		skbckl1 = (!skbckl2 ? del * pnl->sk.mat.E / (1 - pow(pnl->sk.mat.v, 2)) : del * pnl->sk.mat.E >= skcr1);
-		skbckl2 = (!skbckl2 ? del * pnl->sk.mat.E / (1 - pow(pnl->sk.mat.v, 2))*pnl->sk.mat.v : del * pnl->sk.mat.E*pnl->sk.mat.v >= skcr2);
+		
+		if (!skbckl1) skbckl1 = (!skbckl2 ? del * pnl->sk.mat.E / (1 - pow(pnl->sk.mat.v, 2)) : del * pnl->sk.mat.E >= skcr1);
+		if (!skbckl2) skbckl2 = (!skbckl2 ? del * pnl->sk.mat.E / (1 - pow(pnl->sk.mat.v, 2))*pnl->sk.mat.v : del * pnl->sk.mat.E*pnl->sk.mat.v >= skcr2);
 	}
 
 	Result res = Result();

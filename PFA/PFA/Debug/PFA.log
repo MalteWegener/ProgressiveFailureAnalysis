@@ -1,2 +1,5 @@
-﻿  PFA.cpp
+﻿  Solver.cpp
+c:\users\malte\desktop\progressivefailureanalysis\pfa\pfa\solver.cpp(11): warning C4018: '<': signed/unsigned mismatch
+c:\users\malte\desktop\progressivefailureanalysis\pfa\pfa\solver.cpp(39): warning C4018: '<': signed/unsigned mismatch
+c:\users\malte\desktop\progressivefailureanalysis\pfa\pfa\solver.cpp(50): warning C4018: '<': signed/unsigned mismatch
   PFA.vcxproj -> C:\Users\Malte\Desktop\ProgressiveFailureAnalysis\PFA\Debug\PFA.exe
