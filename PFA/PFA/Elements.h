@@ -1,5 +1,9 @@
+#include <vector>
+#define PI 3.1415
+
 class Material {
 public:
+	Material();
 	Material(double nrho, double Emod, double poiss);
 	double E;
 	double rho;
@@ -8,7 +12,8 @@ public:
 
 class Stringer {
 public:
-	Stringer(double nx, double nt, double nE);
+	Stringer();
+	Stringer(double nx, double nt, Material nmat);
 	~Stringer();
 	double x;//length of a leg of the stringer
 	double t;//Thickness of a stringer
@@ -25,7 +30,8 @@ private:
 
 class Skin {
 public:
-	Skin(double nt, Material);
+	Skin(double nt, Material nmat);
+	Skin();
 	~Skin();
 	double width = 0.4;
 	double length = 0.5;
@@ -33,8 +39,28 @@ public:
 	Material mat;
 	double I1;
 	double I2;
-
-private:
-	void Inertia();
+	double A1;
+	double A2;
 };
 
+class Panel {
+public:
+	Panel();
+	~Panel();
+	Skin sk;
+	std::vector<Stringer> stringers;
+	bool skbckl1, skbckl2;
+	bool irbckl;
+	std::vector<bool> stringerbckl;
+
+	void RunProg();
+};
+
+struct Result {
+public:
+	std::vector<double> sigmastr;
+	double sigmask;
+	double del;
+	std::vector<bool> strbckl;
+	bool skbckl1, skbckl2;
+};

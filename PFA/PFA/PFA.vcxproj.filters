@@ -27,6 +27,9 @@
     <ClInclude Include="Elements.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Solver.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -36,6 +39,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Elements.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Solver.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
