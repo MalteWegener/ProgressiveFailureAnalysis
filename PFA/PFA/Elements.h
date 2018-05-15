@@ -1,5 +1,5 @@
 #include <vector>
-#define PI 3.1415
+#define PI 3.14159265359
 
 class Material {
 public:
@@ -65,4 +65,14 @@ public:
 	std::vector<bool> strbckl;
 	bool skbckl1;
 	bool skbckl2;
+};
+
+struct Resultv2 {
+public:
+	double irbckl;
+	double coulumn;
+	double lateral;
+	double mass;
+	bool works;
+	std::vector<double> seed;
 };

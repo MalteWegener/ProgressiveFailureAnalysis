@@ -3,6 +3,8 @@
 #include <iostream>
 #define PI2 pow(3.14156,2)
 #define COEFF 4
+#define BCKL 15000
+#define FAILURE 30000 //Define what other groups couldnt
 
 Result Solver(Panel * pnl, double Force)
 {
@@ -186,33 +188,88 @@ Result Solverv2(Panel * pnl, double Force)
 	return res;
 }
 
-Result Solverv3(Panel * pnl, double Force)
+Resultv2 Solverv3(Panel * pnl)
 {
-	//What can occur?
-	//Buckling of the whole Plate
-	//sideway
-	//interrivet buckling
-
-	//Compatability equation:
-	//Every component has the same strain
-
-	//stiffnes of the Skin varies depending on if sideway buckling occurrs
-	double ESkin1 = pnl->sk.mat.E; //Sideway buckling
-	double ESkin2 = pnl->sk.mat.E/(1-pow(pnl->sk.mat.v,2)); //no sideway buckling
-
-	//critical stresses for buckling
-	double sigCritSide = 4 * pow(PI, 2)*pnl->sk.I2*pnl->sk.mat.E / pow(0.4 / (pnl->stringers.size() - 1), 2) / pnl->sk.A2; //Critical for sideways buckling
-	double IrBuckling = 0.9 * 2.1*pnl->sk.mat.E*pow(pnl->sk.t, 2) / pow(pnl->sk.length / pnl->rivets, 2);
-	std::vector<double> strcrit {};
-	for (int i = 0; i < pnl->stringers.size(); i++) strcrit.push_back(4 * pow(PI, 2)*pnl->stringers[i].I*pnl->stringers[i].mat.E / pow(pnl->sk.length, 2));
-
-	//run a solver for at least the number of components + 1
-	for (int p = 0; p < 10; p++)
+	//Some ugly temporary workaround
+	double Area = pnl->sk.A1;
+	for (int i = 0; i<pnl->stringers.size();i++)
 	{
-		//average stiffnes is just the weighted average of the the stiffnesses
-		double totstiff = 0;
-		double totarea = 0;
+		Area += pnl->stringers[i].A;
 	}
 
-	return Result();
+	double Q = 0; //#Thin walled assumption for the skin
+	for (int i = 0; i<pnl->stringers.size(); i++)
+	{
+		Q += pnl->stringers[i].A*pnl->stringers[i].NA;
+	}
+	double NA = Q / Area;
+
+	//Get like moment of Inertia for weird Euler Formula
+	//Like srsly that fucking guy was a genius. Like did everything. Like jsut imagine him and Gauss
+	//had a baby raised by Einstein and like Schrodinger. That boy would have discovered everything and
+	//our study would be 70 times harder, Or our Robots overlords would have killed us
+	double Iges = pnl->sk.I1 + pnl->sk.A1*pow(NA, 2);
+	for (int i = 0; i<pnl->stringers.size(); i++)
+	{
+		Iges += pnl->stringers[i].A*pow(pnl->stringers[i].NA-NA,2)+pnl->stringers[i].I;
+	}
+
+	double Esum = pnl->sk.mat.E*pnl->sk.A1;
+	for (int i = 0; i<pnl->stringers.size(); i++)
+	{
+		Esum += pnl->stringers[i].A*pnl->stringers[i].mat.E;
+	}
+	double Eav = Esum / Area;
+
+	Resultv2 res = Resultv2();
+	res.coulumn = pow(PI, 2) * 4 * Eav*Iges / pow(pnl->sk.length, 2);
+	res.irbckl = 0.9 * 2.1*pnl->sk.mat.E*pow(pnl->sk.t, 2) / pow((pnl->sk.length - 0.06)/ (pnl->rivets-1), 2)*Area;
+	res.lateral = Kc(pnl->sk.length / (pnl->sk.width / (pnl->stringers.size() - 1)))*pnl->sk.mat.E*pow(pnl->sk.t / (pnl->sk.width / (pnl->stringers.size() - 1)),2)*Area;
+
+	//Lets do some quick maffs for mass
+	res.mass = pnl->sk.A1*pnl->sk.mat.rho;
+	for (int i = 0; i<pnl->stringers.size(); i++)
+	{
+		res.mass += pnl->stringers[i].A*pnl->stringers[i].mat.rho;
+	}
+
+	res.mass *= pnl->sk.length;
+
+	//now for the fittness
+	res.works = !(res.irbckl < 15000 | res.lateral < BCKL | res.coulumn < FAILURE);
+	res.seed = {};
+	res.seed.push_back(pnl->sk.t);
+	for (int i = 0; i < pnl->stringers.size(); i++)
+	{
+		res.seed.push_back(pnl->stringers[i].x);
+		res.seed.push_back(pnl->stringers[i].t);
+		res.seed.push_back(pnl->stringers[i].mat.rho);
+	}
+
+	return res;
+}
+
+double Kc(double nab)
+{
+	//Actually Copied from old code
+	//Like no way i rewrite that even though the code ugly as hell
+	//and inefficient. Has Like O(n^2) Complexity like wtf i can do better
+	if (nab < 0.9) return 15;
+	if (nab >= 5.4) return 3.6;
+
+	std::vector<double> ab { 0.9, 1, 1.4, 2.1, 2.6, 3.4, 4, 5.4};
+	std::vector<double> kc { 7, 6, 5, 4.2, 4, 3.8, 3.7, 3.6 };
+
+	//first find the closest two values
+	int indexsmalleras = ab.size() - 1;
+	int indexbiggeras = 0;
+
+	while (nab > ab[indexbiggeras]) indexbiggeras++;
+	while (nab < ab[indexsmalleras]) indexsmalleras--;
+	indexsmalleras++;
+	indexbiggeras--;
+
+	double slope = kc[indexsmalleras] - kc[indexbiggeras] / (ab[indexsmalleras] - ab[indexbiggeras]);
+	double delta = nab - ab[indexbiggeras];
+	return kc[indexbiggeras] + slope * delta;
 }
