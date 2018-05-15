@@ -73,6 +73,7 @@ Result Solver(Panel * pnl, double Force)
 
 Result Solverv2(Panel * pnl, double Force)
 {
+	std::cout << 0.9 * 2.1*pnl->sk.mat.E*pow(pnl->sk.t, 2) / pow(pnl->sk.length / pnl->rivets, 2) << std::endl;
 	/**
 
 	xDirection1
@@ -93,9 +94,9 @@ Result Solverv2(Panel * pnl, double Force)
 	bool skin2bckl = false;
 
 	//critical stress
-	double skcr1 = 4 * pow(PI, 2)*pnl->sk.I1 *pnl->sk.mat.E / pow(pnl->sk.length/(pnl->rivets-1), 2)/pnl->sk.A1;
-	double skcr1b = 4 * pow(PI, 2)*pnl->sk.I1 * pnl->sk.mat.E / (1 - pow(pnl->sk.mat.v, 2)) / pow(pnl->sk.length / (pnl->rivets - 1), 2) / pnl->sk.A1;
-	double skcr2 = 4 * pow(PI, 2)*pnl->sk.I2*pnl->sk.mat.E / pow(0.4 / (pnl->stringers.size() - 1), 2)/pnl->sk.A2;
+	double skcr1 = 0.9 * 2.1*pnl->sk.mat.E*pow(pnl->sk.t, 2) / pow(pnl->sk.length / pnl->rivets, 2);/*4 * pow(PI, 2)*pnl->sk.I1 *pnl->sk.mat.E / pow(pnl->sk.length/(pnl->rivets-1), 2)/pnl->sk.A1;*/
+	double skcr1b = 0.9 * 2.1*pnl->sk.mat.E*pow(pnl->sk.t, 2) / pow(pnl->sk.length / pnl->rivets, 2);/*4 * pow(PI, 2)*pnl->sk.I1 * pnl->sk.mat.E / (1 - pow(pnl->sk.mat.v, 2)) / pow(pnl->sk.length / (pnl->rivets - 1), 2) / pnl->sk.A1;*/
+	double skcr2 = 1 * pow(PI, 2)*pnl->sk.I2*pnl->sk.mat.E / pow(0.4 / (pnl->stringers.size() - 1), 2)/pnl->sk.A2;
 	//Deflection of the skin: if buckling in direction 2: sig /E*(1-v^2) else sig/E
 	//Stress in direction 2 = sig1*v
 	//Deflection of a stringer = sig/E
@@ -138,16 +139,21 @@ Result Solverv2(Panel * pnl, double Force)
 		strain = Force / totarea / totstiff;
 
 		//solve for the stress states
-		if (skin1bckl);
-		else if (!skin2bckl)
+
+		if (!skin2bckl && !skin1bckl)
 		{
 			stressSkin1 = strain * pnl->sk.mat.E / (1 - pow(pnl->sk.mat.v, 2));
 			stressSkin2 = pnl->sk.mat.v * stressSkin1;
 		}
-		else
+		else if(skin2bckl && !skin1bckl)
 		{
 			stressSkin1 = strain * pnl->sk.mat.E;
+			stressSkin2 = skcr2;
+		}
+		else
+		{
 			stressSkin1 = 0;
+			stressSkin2 = 0;
 		}
 
 		for (int i = 0; i < strbckl.size(); i++)
@@ -158,7 +164,6 @@ Result Solverv2(Panel * pnl, double Force)
 			}
 		}
 
-		//diasable retarded niggas
 		// for that we calculate the critical stress and compare it to the actual stress because that nigger some retard
 		double actcr1 = skin2bckl ? skcr1b : skcr1;
 		if (!skin1bckl && (stressSkin1 >= actcr1)) skin1bckl = true;
@@ -179,4 +184,35 @@ Result Solverv2(Panel * pnl, double Force)
 	res.skbckl2 = skin2bckl;
 	res.strbckl = strbckl;
 	return res;
+}
+
+Result Solverv3(Panel * pnl, double Force)
+{
+	//What can occur?
+	//Buckling of the whole Plate
+	//sideway
+	//interrivet buckling
+
+	//Compatability equation:
+	//Every component has the same strain
+
+	//stiffnes of the Skin varies depending on if sideway buckling occurrs
+	double ESkin1 = pnl->sk.mat.E; //Sideway buckling
+	double ESkin2 = pnl->sk.mat.E/(1-pow(pnl->sk.mat.v,2)); //no sideway buckling
+
+	//critical stresses for buckling
+	double sigCritSide = 4 * pow(PI, 2)*pnl->sk.I2*pnl->sk.mat.E / pow(0.4 / (pnl->stringers.size() - 1), 2) / pnl->sk.A2; //Critical for sideways buckling
+	double IrBuckling = 0.9 * 2.1*pnl->sk.mat.E*pow(pnl->sk.t, 2) / pow(pnl->sk.length / pnl->rivets, 2);
+	std::vector<double> strcrit {};
+	for (int i = 0; i < pnl->stringers.size(); i++) strcrit.push_back(4 * pow(PI, 2)*pnl->stringers[i].I*pnl->stringers[i].mat.E / pow(pnl->sk.length, 2));
+
+	//run a solver for at least the number of components + 1
+	for (int p = 0; p < 10; p++)
+	{
+		//average stiffnes is just the weighted average of the the stiffnesses
+		double totstiff = 0;
+		double totarea = 0;
+	}
+
+	return Result();
 }
