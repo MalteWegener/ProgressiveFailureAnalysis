@@ -49,9 +49,10 @@ public:
 	~Panel();
 	Skin sk;
 	std::vector<Stringer> stringers;
-	bool skbckl1, skbckl2;
-	bool irbckl;
-	std::vector<bool> stringerbckl;
+	int rivets;
+	/*bool skbckl1, skbckl2;
+	bool irbckl;*/
+	//std::vector<bool> stringerbckl;
 
 	void RunProg();
 };
@@ -62,5 +63,6 @@ public:
 	double sigmask;
 	double del;
 	std::vector<bool> strbckl;
-	bool skbckl1, skbckl2;
+	bool skbckl1;
+	bool skbckl2;
 };

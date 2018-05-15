@@ -1,7 +1,3 @@
-﻿  Solver.cpp
-f:\desktop\progressive\pfa\pfa\solver.cpp(39): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-f:\desktop\progressive\pfa\pfa\solver.cpp(50): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-  PFA.cpp
-f:\desktop\progressive\pfa\pfa\pfa.cpp(41): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-  Code wird generiert...
-  PFA.vcxproj -> F:\Desktop\Progressive\PFA\Debug\PFA.exe
+﻿  PFA.cpp
+c:\users\malte\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(44): warning C4018: '<': signed/unsigned mismatch
+  PFA.vcxproj -> C:\Users\Malte\Desktop\ProgressiveFailureAnalysis\PFA\Debug\PFA.exe

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Elements.h"
 #include <math.h>
+#include <iostream>
 
 Stringer::Stringer()
 {
@@ -43,8 +44,8 @@ Skin::Skin(double nt, Material nmat)
 
 	A1 = width * t;
 	A2 = length * t;
-	I1 = 1 / 12 * pow(t, 3)*width;
-	I2 = 1 / 12 * pow(t, 3)*length;
+	I1 = pow(t, 3) / 12 * width;
+	I2 = pow(t, 3) / 12 * length;
 }
 
 Skin::Skin()
