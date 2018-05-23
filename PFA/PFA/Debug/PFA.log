@@ -1,18 +1,6 @@
-﻿  PFA.cpp
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(15): warning C4018: '<': signed/unsigned mismatch
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(47): warning C4018: '<': signed/unsigned mismatch
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(53): warning C4018: '<': signed/unsigned mismatch
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(63): warning C4554: '|': check operator precedence for possible error; use parentheses to clarify precedence
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(65): warning C4018: '<': signed/unsigned mismatch
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(67): warning C4018: '<': signed/unsigned mismatch
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(80): warning C4554: '|': check operator precedence for possible error; use parentheses to clarify precedence
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(82): warning C4018: '<': signed/unsigned mismatch
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(84): warning C4018: '<': signed/unsigned mismatch
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(86): warning C4018: '<': signed/unsigned mismatch
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(102): warning C4554: '|': check operator precedence for possible error; use parentheses to clarify precedence
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(104): warning C4018: '<': signed/unsigned mismatch
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(106): warning C4018: '<': signed/unsigned mismatch
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(108): warning C4018: '<': signed/unsigned mismatch
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(110): warning C4018: '<': signed/unsigned mismatch
-f:\desktop\progressivefailureanalysis\pfa\pfa\pfa.cpp(134): warning C4018: '<': signed/unsigned mismatch
-  PFA.vcxproj -> F:\Desktop\ProgressiveFailureAnalysis\PFA\Debug\PFA.exe
+﻿  Elements.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  Solver.cpp
+  PFA.cpp
+  PFA.vcxproj -> C:\Users\Malte\Desktop\ProgressiveFailureAnalysis\PFA\Debug\PFA.exe

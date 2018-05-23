@@ -191,7 +191,7 @@ Result Solverv2(Panel * pnl, double Force)
 Resultv2 Solverv3(Panel * pnl)
 {
 	//Some ugly temporary workaround
-	double Area = pnl->sk.A1;
+	double Area = 0;//pnl->sk.A1;
 	for (int i = 0; i<pnl->stringers.size();i++)
 	{
 		Area += pnl->stringers[i].A;
@@ -208,13 +208,13 @@ Resultv2 Solverv3(Panel * pnl)
 	//Like srsly that fucking guy was a genius. Like did everything. Like jsut imagine him and Gauss
 	//had a baby raised by Einstein and like Schrodinger. That boy would have discovered everything and
 	//our study would be 70 times harder, Or our Robots overlords would have killed us
-	double Iges = pnl->sk.I1 + pnl->sk.A1*pow(NA, 2);
+	double Iges = 0;// pnl->sk.I1 + pnl->sk.A1*pow(NA, 2);
 	for (int i = 0; i<pnl->stringers.size(); i++)
 	{
 		Iges += pnl->stringers[i].A*pow(pnl->stringers[i].NA-NA,2)+pnl->stringers[i].I;
 	}
 
-	double Esum = pnl->sk.mat.E*pnl->sk.A1;
+	double Esum = 0;//pnl->sk.mat.E*pnl->sk.A1;
 	for (int i = 0; i<pnl->stringers.size(); i++)
 	{
 		Esum += pnl->stringers[i].A*pnl->stringers[i].mat.E;
@@ -225,7 +225,7 @@ Resultv2 Solverv3(Panel * pnl)
 	res.coulumn = pow(PI, 2) * 4 * Eav*Iges / pow(pnl->sk.length, 2);
 	res.irbckl = 0.9 * 2.1*pnl->sk.mat.E*pow(pnl->sk.t, 2) / pow((pnl->sk.length - 0.06)/ (pnl->rivets-1), 2)*Area;
 	res.lateral = Kc(pnl->sk.length / (pnl->sk.width / (pnl->stringers.size() - 1)))*pnl->sk.mat.E*pow(pnl->sk.t / (pnl->sk.width / (pnl->stringers.size() - 1)),2)*Area;
-
+	
 	//Lets do some quick maffs for mass
 	res.mass = pnl->sk.A1*pnl->sk.mat.rho;
 	for (int i = 0; i<pnl->stringers.size(); i++)
