@@ -7,9 +7,14 @@
 	{
 	}
 
+	Stringer::Stringer(double nx, double ny, double nt, Material nmat)
+	{
+	}
+
 	Stringer::Stringer(double nx, double nt, Material nmat)
 	{
 		x = nx;
+		y = x;
 		t = nt;
 		mat = nmat;
 
@@ -24,17 +29,17 @@
 
 	double Stringer::Inertia()
 	{
-		return 1/12*(x*t*(x*x+t*t)-t*t*t*t)+pow(x/2-NA,2)*x*t+pow(NA-t/2,2)*x*t-pow(NA-t/2,2)*t*t;
+		return 1/12*(pow(t,3)*x+pow(y,3)*t)+pow(NA-t/2,2)*x*t+pow(NA-y/2,2)*y*t;
 	}
 
 	double Stringer::Area()
 	{
-		return 2 * x*t - t * t;
+		return x*t+y*t-pow(t,2);
 	}
 
 	double Stringer::Neutral()
 	{
-		return 0.5*(x*t*(x+t)-pow(t,3))/A;
+		return (0.5*x*pow(t,2)+0.5*pow(y,2)*t)/A;
 	}
 
 	Skin::Skin(double nt, Material nmat)

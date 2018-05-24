@@ -13,9 +13,11 @@ public:
 class Stringer {
 public:
 	Stringer();
+	Stringer(double nx,double ny, double nt, Material nmat);
 	Stringer(double nx, double nt, Material nmat);
 	~Stringer();
 	double x;//length of a leg of the stringer
+	double y;
 	double t;//Thickness of a stringer
 	Material mat;
 	double I;//Inertia around Neutral Axis
