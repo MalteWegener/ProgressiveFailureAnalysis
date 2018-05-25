@@ -242,6 +242,7 @@ Resultv2 Solverv3(Panel * pnl)
 	for (int i = 0; i < pnl->stringers.size(); i++)
 	{
 		res.seed.push_back(pnl->stringers[i].x);
+		res.seed.push_back(pnl->stringers[i].y);
 		res.seed.push_back(pnl->stringers[i].t);
 		res.seed.push_back(pnl->stringers[i].mat.rho);
 	}
