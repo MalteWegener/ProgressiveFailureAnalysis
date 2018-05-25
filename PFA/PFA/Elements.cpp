@@ -9,6 +9,14 @@
 
 	Stringer::Stringer(double nx, double ny, double nt, Material nmat)
 	{
+		x = nx;
+		y = ny;
+		t = nt;
+		mat = nmat;
+
+		A = Area();
+		NA = Neutral();
+		I = Inertia();
 	}
 
 	Stringer::Stringer(double nx, double nt, Material nmat)

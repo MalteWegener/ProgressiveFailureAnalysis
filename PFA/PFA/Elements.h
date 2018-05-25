@@ -51,7 +51,7 @@ public:
 	~Panel();
 	Skin sk;
 	std::vector<Stringer> stringers;
-	int rivets = 10;
+	int rivets = 11;
 	/*bool skbckl1, skbckl2;
 	bool irbckl;*/
 	//std::vector<bool> stringerbckl;
